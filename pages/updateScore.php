@@ -3,6 +3,7 @@ session_start();
 date_default_timezone_set("Europe/Bucharest");
 /*
 this is on lewluu branch
+this is on main branch
 */
 
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],
