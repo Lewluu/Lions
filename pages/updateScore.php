@@ -16,6 +16,29 @@ if(!empty($_POST)){
     $it_val=$_POST["itVal"];
     $rol=$_SESSION["Rol"];
 
+    switch($id_category){
+        case 1:
+            $table="gtfo_category.department";
+            $category="Departament";
+            break;
+        case 2:
+            $table="gtfo_category.extern";
+            $category="Extern";
+            break;
+        case 3:
+            $table="gtfo_category.frteams";
+            $category="EchipeFR";
+            break;
+        case 4:
+            $table="gtfo_category.grants";
+            $category="Granturi";
+            break;
+        case 5:
+            $table="gtfo_category.international";
+            $category="International";
+            break;
+    }
+
     die();
 }
 ?>
