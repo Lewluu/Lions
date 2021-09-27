@@ -16,7 +16,7 @@ if(!empty($_POST)){
     $it_val=$_POST["itVal"];
     $rol=$_SESSION["Rol"];
 
-    switch($id_category){
+    switch($id_category){                                       //getting the right category table
         case 1:
             $table="gtfo_category.department";
             $category="Departament";
@@ -38,6 +38,9 @@ if(!empty($_POST)){
             $category="International";
             break;
     }
+
+    //getting the task
+    $sql="SELECT ";
 
     die();
 }
