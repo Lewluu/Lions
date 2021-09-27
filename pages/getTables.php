@@ -3,13 +3,13 @@
     <body>
         <?php
         session_start();
-        
+
         $q=intval($_GET['q']);
         if($q){
             $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
             if($conn->connect_error)
                 die("Failed to connect: ".$conn->connect_error);
-            $sql="SHOW TABLES FROM gtfo";
+            $sql="SHOW TABLES FROM gtfo_category";
             $result=$conn->query($sql);
             $category[]="";
             $i=0;

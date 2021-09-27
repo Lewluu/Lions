@@ -3,28 +3,28 @@
     <body>
         <?php
         session_start();
-        
+
         $q=intval($_GET['q']);
         $table="";
-        
+
         $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
         if($conn->connect_error)
             die("Failed to connect: ".$conn->connect_error);
         switch($q){
             case 1:
-                $table="gtfo.department";
+                $table="gtfo_category.department";
                 break;
             case 2:
-                $table="gtfo.extern";
+                $table="gtfo_category.extern";
                 break;
             case 3:
-                $table="gtfo.frteams";
+                $table="gtfo_category.frteams";
                 break;
             case 4:
-                $table="gtfo.grants";
+                $table="gtfo_category.grants";
                 break;
             case 5:
-                $table="gtfo.international";
+                $table="gtfo_category.international";
                 break;
         }
         if($table){
@@ -42,7 +42,7 @@
                 echo   '</select>';
             }
         }
-        
+
         ?>
     </body>
 </html>
