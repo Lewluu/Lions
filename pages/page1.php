@@ -22,8 +22,6 @@ if($result->num_rows>0){
     $_SESSION['Name']=$row['Nume'];
 }
 
-include 'functions.php';
-
 ?>
 <!DOCTYPE html>
 <html>
