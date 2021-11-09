@@ -82,7 +82,6 @@ class Member{
                 '$this->task',$this->task_score,'$date','$time','$this->action','$status','$rol')";
         $result=$conn->query($sql);
         if(!$result){
-            echo "Here the error<br>";
             die("Failed to connect: ".$conn->error);
         }
     }

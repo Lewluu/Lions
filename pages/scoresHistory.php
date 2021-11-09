@@ -22,28 +22,38 @@ $conn=new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["pas
             <a href="../index.php">Log Out</a></p>
         </div>
         <div id="scores_box">
-            <div id="scores_list">
-                <h3>Admin added score</h3>
+            <table>
+                <th>Nr.</th>
+                <th>Nume</th>
+                <th>Categorie</th>
+                <th>Task</th>
+                <th>Scor</th>
+                <th>Data</th>
+                <th>Ora</th>
+                <th>Actiune realizata:</th>
+                <th>Adaugat de:</th>
+                <th>Optiune?:</th>
                 <?php
-                $sql="SELECT id, Date1, Date2, Member, Task, Score, Action FROM gtfo.scores_admin";
-                if($result=$conn->query($sql)){
-                    while($row=$result->fetch_assoc()){
-                        echo $row["id"].". ".$row["Date1"]." ".$row["Date2"]." ".$row["Member"]." ".$row["Task"]." ".$row["Score"]." ".$row["Action"]."<br>";
-                    }
+
+                $sql="SELECT * FROM gtfo.scores";
+                $result=$conn->query($sql);
+                while($row=$result->fetch_assoc()){
+                    echo '<tr>';
+                    echo '<td>'.$row['id'].'</td>';
+                    echo '<td>'.$row['Member'].'</td>';
+                    echo '<td>'.$row['Category'].'</td>';
+                    echo '<td>'.$row['Task'].'</td>';
+                    echo '<td>'.$row['Score'].'</td>';
+                    echo '<td>'.$row['Date'].'</td>';
+                    echo '<td>'.$row['Time'].'</td>';
+                    echo '<td>'.$row['Action'].'</td>';
+                    echo '<td>'.$row['AddedBy'].'</td>';
+                    echo '<td>selectare</td>';
+                    echo '</tr>';
                 }
+
                 ?>
-            </div>
-            <div id="scores_list">
-                <h3>User added score</h3>
-                <?php
-                $sql="SELECT id, Date1, Date2, Member, Task, Score, Action FROM gtfo.scores_user";
-                if($result=$conn->query($sql)){
-                    while($row=$result->fetch_assoc()){
-                        echo $row["id"].". ".$row["Date1"]." ".$row["Date2"]." ".$row["Member"]." ".$row["Task"]." ".$row["Score"]." ".$row["Action"]."<br>";
-                    }
-                }
-                ?>
-            </div>
+            </table>
         </div>
         <button id="button_history" onclick="location.href='page1.php'">
             Back
