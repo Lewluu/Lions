@@ -15,6 +15,7 @@ if(!empty($_POST)){
     $id_task=$_POST["task"];
     $it_val=$_POST["itVal"];
     $rol=$_SESSION["Rol"];
+    $action=strval($_POST["pressed"]);
 
     switch($id_category){                                       //getting the right category table
         case 1:
@@ -48,8 +49,11 @@ if(!empty($_POST)){
         $row=$result->fetch_assoc();
         $task=$row["Name"];
     }
-
-    $member=new Member($_SESSION['username'],$category,$task,);
+    //adding to history and updating score
+    $member=new Member($_SESSION['username'],$category,$task,$action);
+    $member->AddToHistory();
+    if($rol=="Admin")
+        $member->UpdateScore();
 
     die();
 }
