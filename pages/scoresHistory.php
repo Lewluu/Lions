@@ -23,16 +23,16 @@ $conn=new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["pas
         </div>
         <div id="scores_box">
             <table>
-                <th>Nr.</th>
+                <th>No.</th>
                 <th>Nume</th>
                 <th>Categorie</th>
                 <th>Task</th>
                 <th>Scor</th>
                 <th>Data</th>
                 <th>Ora</th>
-                <th>Actiune realizata:</th>
+                <th>Actiune realizata</th>
                 <th>Adaugat de:</th>
-                <th>Optiune?:</th>
+                <th>Optiune?</th>
                 <?php
 
                 $sql="SELECT * FROM gtfo.scores";
@@ -48,7 +48,7 @@ $conn=new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["pas
                     echo '<td>'.$row['Time'].'</td>';
                     echo '<td>'.$row['Action'].'</td>';
                     echo '<td>'.$row['AddedBy'].'</td>';
-                    echo '<td>selectare</td>';
+                    echo '<td>stergere/readaugare</td>';
                     echo '</tr>';
                 }
 
