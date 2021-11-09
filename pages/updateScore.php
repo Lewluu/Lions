@@ -40,6 +40,16 @@ if(!empty($_POST)){
     }
 
     //getting the task
+    $sql="SELECT Name FROM $table WHERE id='$id_task'";
+    $result=$conn->query($sql);
+    if(!$result)
+        die("Failed to connect: ".$conn->error);
+    else{
+        $row=$result->fetch_assoc();
+        $task=$row["Name"];
+    }
+
+    $member=new Member($_SESSION['username'],$category,$task,);
 
     die();
 }

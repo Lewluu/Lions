@@ -12,8 +12,9 @@ class Member{
     private $task;
     private $task_score;
     private $action;
-    //methods
-    function __construct($name,$category,$task,$score,$action){             //category
+    
+    //constructor
+    function __construct($name,$category,$task,$action){             //category
         $this->name=$name;
         $this->category=$category;
         $this->task=$task;
@@ -30,6 +31,7 @@ class Member{
             $this->task_score=$row["Score"];
         }
     }
+    
     //public methods
     function AddToHistory(){
         global $conn;                                                       //to use the global variable
@@ -77,7 +79,7 @@ class Member{
         if($result)
             die("Failed to connect: ".$conn->error);
     }
-    
+
     function UpdateScore(){
         //va prelucra toate scorurile din unchecked si adminul ori va da accept si vor deveni checked
         //ori ii va da denies si se va sterge complet
