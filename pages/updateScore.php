@@ -50,10 +50,9 @@ if(!empty($_POST)){
         $task=$row["Name"];
     }
     //adding to history and updating score
-    $member=new Member($_SESSION['username'],$category,$task,$action);
-    $member->AddToHistory();
     if($rol=="Admin")
-        $member->UpdateScore();
+        $id_member=$_POST["members"];
+        
 
     die();
 }
