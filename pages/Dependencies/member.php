@@ -10,16 +10,27 @@ class Member{
     private $name;
     private $category;
     private $task;
-    private $score;
+    private $task_score;
     private $action;
     //methods
     function __construct($name,$category,$task,$score,$action){             //category
         $this->name=$name;
         $this->category=$category;
         $this->task=$task;
-        $this->score=$score;
         $this->action=$action;
+        //getting the task score
+        global $conn;
+
+        $sql="SELECT Score FROM '$this->category' WHERE Name='$this->task'";
+        $result=$conn->query($sql);
+        if(!$result)
+            die("Failed to connect: ".$conn->error);
+        else{
+            $row=$result->fetch_assoc();
+            $this->task_score=$row["Score"];
+        }
     }
+    //public methods
     function AddToHistory(){
         global $conn;                                                       //to use the global variable
         $current_score=$new_score=$current_category_score=$new_category_score="";
@@ -34,12 +45,12 @@ class Member{
             $current_category_score=$row[$this->category];
         }
         if($this->action=="Adaugare"){
-            $new_score=$current_score+$this->score;
-            $new_category_score=$current_category_score+$this->score;
+            $new_score=$current_score+$this->task_score;
+            $new_category_score=$current_category_score+$this->task_score;
         }
         else{
-            $new_score=$current_score-$this->score;
-            $new_category_score=$current_category_score-$this->score;
+            $new_score=$current_score-$this->task_score;
+            $new_category_score=$current_category_score-$this->task_score;
         }
         if($new_score<0 || $new_category_score<0)
             die("Noul scor e mai mic decat 0!");
@@ -66,6 +77,7 @@ class Member{
         if($result)
             die("Failed to connect: ".$conn->error);
     }
+    
     function UpdateScore(){
         //va prelucra toate scorurile din unchecked si adminul ori va da accept si vor deveni checked
         //ori ii va da denies si se va sterge complet
@@ -82,12 +94,12 @@ class Member{
             $current_category_score=$row[$this->category];
         }
         if($this->action=="Adaugare"){
-            $new_score=$current_score+$this->score;
-            $new_category_score=$current_category_score+$this->score;
+            $new_score=$current_score+$this->task_score;
+            $new_category_score=$current_category_score+$this->task_score;
         }
         else{
-            $new_score=$current_score-$this->score;
-            $new_category_score=$current_category_score-$this->score;
+            $new_score=$current_score-$this->task_score;
+            $new_category_score=$current_category_score-$this->task_score;
         }
         if($new_score<0 || $new_category_score<0)
             die("Noul scor e mai mic decat 0!");

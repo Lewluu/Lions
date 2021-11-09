@@ -40,7 +40,6 @@ if(!empty($_POST)){
     }
 
     //getting the task
-    $sql="SELECT ";
 
     die();
 }
