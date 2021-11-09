@@ -1,35 +1,40 @@
 <?php
-session_start();
 date_default_timezone_set("Europe/Bucharest");
 
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],
                     $_SESSION["password"]);
+if($conn->connect_error)
+    die("Failed to connect: ".$conn->connect_error);
 
 class Member{
     //private attributes
     private $name;
-    private $category;
+    private $category;                                      //aka table name
+    private $category_name;
     private $task;
     private $task_score;
     private $action;
     
     //constructor
-    function __construct($name,$category,$task,$action){             //category
+    function __construct($name,$category,$category_name,$task,$action){             //category
         $this->name=$name;
         $this->category=$category;
         $this->task=$task;
         $this->action=$action;
+        $this->category_name=$category_name;
         //getting the task score
         global $conn;
 
-        $sql="SELECT Score FROM '$this->category' WHERE Name='$this->task'";
+        $sql="SELECT Score FROM $this->category WHERE Name='$this->task'";
         $result=$conn->query($sql);
-        if(!$result)
+        if(!$result){
             die("Failed to connect: ".$conn->error);
+        }
         else{
             $row=$result->fetch_assoc();
             $this->task_score=$row["Score"];
         }
+
     }
     
     //public methods
@@ -48,7 +53,7 @@ class Member{
         }
         if($this->action=="Adaugare"){
             $new_score=$current_score+$this->task_score;
-            $new_category_score=$current_category_score+$this->task_score;
+            $new_category_score=intval($current_category_score)+$this->task_score;
         }
         else{
             $new_score=$current_score-$this->task_score;
@@ -72,11 +77,11 @@ class Member{
             $status="Checked";
         else
             $status="Unchecked";
-        $sql="INSERT INTO gtfo.scores(id,'$this->name','$this->category','$this->task',Score,
-                Date,Time,Action,Status,AddedBy) VALUES('$id','$this->name','$this->category',
-                '$this->task','$date','$time','$this->action','$status','$rol')";
+        $sql="INSERT INTO gtfo.scores(id,'$this->name',$this->category,$this->task,Score,
+                Date,Time,Action,Status,AddedBy) VALUES($id,$this->name,$this->category,
+                $this->task,$date,$time,$this->action,$status,$rol)";
         $result=$conn->query($sql);
-        if($result)
+        if(!$result)
             die("Failed to connect: ".$conn->error);
     }
 
@@ -97,7 +102,7 @@ class Member{
         }
         if($this->action=="Adaugare"){
             $new_score=$current_score+$this->task_score;
-            $new_category_score=$current_category_score+$this->task_score;
+            $new_category_score=intval($current_category_score)+$this->task_score;
         }
         else{
             $new_score=$current_score-$this->task_score;
@@ -106,7 +111,7 @@ class Member{
         if($new_score<0 || $new_category_score<0)
             die("Noul scor e mai mic decat 0!");
 
-        $sql="UPDATE gtfo.members SET Score='$new_score', '$this->category=$new_category_score'
+        $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
                 WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if(!$result)

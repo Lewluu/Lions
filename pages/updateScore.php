@@ -6,6 +6,8 @@ this is on lewluu branch
 this is on main branch
 */
 
+require 'Dependencies/member.php';
+
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],
                    $_SESSION["password"]);
 if($conn->connect_error)
@@ -55,21 +57,21 @@ if(!empty($_POST)){
         $sql="SELECT Nume FROM gtfo.members WHERE id='$id_member'";
         $result=$conn->query($sql);
         if($result->num_rows>0){
-            $row=$result->fetch_assoc()();
+            $row=$result->fetch_assoc();
             $member=$row['Nume'];
         }
         else
             die("Failed to connect: ".$conn->error);
         
-        $member=new Member($member,$category,$task,$action);
+        $member=new Member($member,$table,$category,$task,$action);
         $member->AddToHistory();
         $member->UpdateScore();
     }
     else{
-        $member=new Member($_SESSION['Username'],$category,$task,$action);
+        $member=new Member($_SESSION['Username'],$table,$category,$task,$action);
         $member->AddToHistory();
     }
 
-    die();
+    header("Location: page1.php");
 }
 ?>
