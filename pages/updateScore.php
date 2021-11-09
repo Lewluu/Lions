@@ -50,9 +50,25 @@ if(!empty($_POST)){
         $task=$row["Name"];
     }
     //adding to history and updating score
-    if($rol=="Admin")
+    if($rol=="Admin"){
         $id_member=$_POST["members"];
+        $sql="SELECT Nume FROM gtfo.members WHERE id='$id_member'";
+        $result=$conn->query($sql);
+        if($result->num_rows>0){
+            $row=$result->fetch_assoc()();
+            $member=$row['Nume'];
+        }
+        else
+            die("Failed to connect: ".$conn->error);
         
+        $member=new Member($member,$category,$task,$action);
+        $member->AddToHistory();
+        $member->UpdateScore();
+    }
+    else{
+        $member=new Member($_SESSION['Username'],$category,$task,$action);
+        $member->AddToHistory();
+    }
 
     die();
 }
