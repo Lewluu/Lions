@@ -77,12 +77,14 @@ class Member{
             $status="Checked";
         else
             $status="Unchecked";
-        $sql="INSERT INTO gtfo.scores(id,'$this->name',$this->category,$this->task,Score,
-                Date,Time,Action,Status,AddedBy) VALUES($id,$this->name,$this->category,
-                $this->task,$date,$time,$this->action,$status,$rol)";
+        $sql="INSERT INTO gtfo.scores(id,Member,Category,Task,Score,
+                Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','$this->category',
+                '$this->task',$this->task_score,'$date','$time','$this->action','$status','$rol')";
         $result=$conn->query($sql);
-        if(!$result)
+        if(!$result){
+            echo "Here the error<br>";
             die("Failed to connect: ".$conn->error);
+        }
     }
 
     function UpdateScore(){
