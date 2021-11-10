@@ -73,8 +73,8 @@ class Member{
         else
             die("Failed to connect: ".$conn->error);
         $rol=$_SESSION["Rol"];
-        $sql="INSERT INTO gtfo.scores(id,Member,Category,Task,Score,
-                Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','$this->category',
+        $sql="INSERT INTO gtfo.scores(id,Member,Category,Category_Table,Task,Score,
+                Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','$this->category_name','$this->category',
                 '$this->task',$this->task_score,'$date','$time','$this->action','Unchecked','$rol')";
         $result=$conn->query($sql);
         if(!$result){
@@ -113,7 +113,7 @@ class Member{
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);
-        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE Nume='$this->name'";
+        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE Member='$this->name'";
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);

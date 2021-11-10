@@ -1,4 +1,7 @@
 <?php session_start();
+
+require "Dependencies/member.php";
+
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
 if($conn->connect_error)
     die("Failed to connect: ".$conn->connect_error);
@@ -100,22 +103,24 @@ if($conn->connect_error)
                 </tr>
                 <form name="scoresForm" method="POST" action="requestsHistory.php">
                 <?php
-                $sql="SELECT Date, Time, Member, Category, Task, Score, Action FROM gtfo.scores WHERE AddedBy='User'";
+                $sql="SELECT Date, Time, Member, Category, Category_Table, Task, Score, Action FROM gtfo.scores WHERE Status='Unchecked'";
                 if($result=$conn->query($sql)){
                     $k=0;
                     $id=0;
                     while($row=$result->fetch_assoc()){
+                        //need to get category from database "gtfo_category..."
                         $APROBARE[$k]="APROBARE".$k;
                         echo "<tr>";
                         echo "<td>".++$id."</td>";
                         echo "<td>".$row["Member"]."</td>";
-                        $nume[$k]=$row["Member"];
                         echo "<td>".$row["Category"]."</td>";
                         echo "<td>".$row["Task"]."</td>";
                         echo "<td>".$row["Date"]."</td>";
                         echo "<td>".$row["Time"]."</td>";
                         echo "<td>".$row["Score"]."</td>";
                         echo "<td>".$row["Action"]."</td>";
+                        //creating a member with this data
+                        $member[$k]=new Member($row["Member"],$row["Category_Table"],$row["Category"],$row["Task"],$row["Action"]);
                         echo
                         "<td>
                             DA <input type='radio' name=".$APROBARE[$k]." value='YES'>
@@ -135,8 +140,13 @@ if($conn->connect_error)
                     if(!empty($_POST[$APROBARE[$l]])){
                         if($_POST[$APROBARE[$l]]=="YES"){
                             //clar va trebui facuta o functie aici de updateScore
+                            $member[$l]->UpdateScore();
                         }
-                        else{
+                        elseif($_POST[$APROBARE[$l]]=="NO"){
+                            $sql="DELETE FROM gtfo.scores WHERE id=($l+1)";
+                            $result=$conn->query($sql);
+                            if(!$result)
+                                die("Failed to connect: ".$conn->error);
                         }
                     }
                 }
