@@ -109,6 +109,7 @@ if($conn->connect_error)
                         echo "<tr>";
                         echo "<td>".++$id."</td>";
                         echo "<td>".$row["Member"]."</td>";
+                        $nume[$k]=$row["Member"];
                         echo "<td>".$row["Category"]."</td>";
                         echo "<td>".$row["Task"]."</td>";
                         echo "<td>".$row["Date"]."</td>";
@@ -134,6 +135,8 @@ if($conn->connect_error)
                     if(!empty($_POST[$APROBARE[$l]])){
                         if($_POST[$APROBARE[$l]]=="YES"){
                             //clar va trebui facuta o functie aici de updateScore
+                        }
+                        else{
                         }
                     }
                 }

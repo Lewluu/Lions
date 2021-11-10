@@ -14,7 +14,7 @@ class Member{
     private $task;
     private $task_score;
     private $action;
-    
+
     //constructor
     function __construct($name,$category,$category_name,$task,$action){             //category
         $this->name=$name;
@@ -36,7 +36,7 @@ class Member{
         }
 
     }
-    
+
     //public methods
     function AddToHistory(){
         global $conn;                                                       //to use the global variable
@@ -73,13 +73,9 @@ class Member{
         else
             die("Failed to connect: ".$conn->error);
         $rol=$_SESSION["Rol"];
-        if($rol=="Admin")
-            $status="Checked";
-        else
-            $status="Unchecked";
         $sql="INSERT INTO gtfo.scores(id,Member,Category,Task,Score,
                 Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','$this->category',
-                '$this->task',$this->task_score,'$date','$time','$this->action','$status','$rol')";
+                '$this->task',$this->task_score,'$date','$time','$this->action','Unchecked','$rol')";
         $result=$conn->query($sql);
         if(!$result){
             die("Failed to connect: ".$conn->error);
@@ -114,6 +110,10 @@ class Member{
 
         $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
                 WHERE Nume='$this->name'";
+        $result=$conn->query($sql);
+        if(!$result)
+            die("Failed to connect: ".$conn->error);
+        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);
