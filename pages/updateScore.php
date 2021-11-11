@@ -68,7 +68,7 @@ if(!empty($_POST)){
         $member->UpdateScore();
     }
     else{
-        $member=new Member($_SESSION['username'],$category,$table,$task,$action);
+        $member=new Member($_SESSION['Name'],$category,$table,$task,$action);
         $member->AddToHistory();
     }
 

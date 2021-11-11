@@ -119,6 +119,10 @@ class Member{
         if(!$result)
             die("Failed to connect: ".$conn->error);
     }
+
+    function getName(){
+        return $this->name;
+    }
 }
 
 ?>

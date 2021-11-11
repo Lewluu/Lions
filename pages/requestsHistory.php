@@ -33,9 +33,9 @@ if($conn->connect_error)
                     <th>Aprobare?</th>
                 </tr>
             <?php
-            if(isset($_POST["exeReq"])){
-                echo "<meta http-equiv='refresh' content='0'>";
-            }
+            // if(isset($_POST["exeReq"])){
+            //     echo "<meta http-equiv='refresh' content='0'>";
+            // }
             $sql="SELECT id, Email, Approved FROM gtfo.requests";
             $result=$conn->query($sql);
             if($result){
@@ -143,7 +143,8 @@ if($conn->connect_error)
                             $member[$l]->UpdateScore();
                         }
                         else{
-                            $sql="DELETE FROM gtfo.scores WHERE id=($l+1)";
+                            $name=strval($member[$l]->getName());
+                            $sql="DELETE FROM gtfo.scores WHERE Member='$name'";
                             $result=$conn->query($sql);
                             if(!$result)
                                 die("Failed to connect: ".$conn->error);
