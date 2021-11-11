@@ -108,7 +108,7 @@ class Member{
         if($new_score<0 || $new_category_score<0)
             die("Noul scor e mai mic decat 0!");
 
-        //this is the update part 
+        //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name 
         $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
                 WHERE Nume='$this->name'";
         $result=$conn->query($sql);

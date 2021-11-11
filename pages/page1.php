@@ -1,4 +1,7 @@
 <?php session_start();
+
+require 'Dependencies/functions.php';
+
 if(empty($_SESSION['login'])){
     header("Location: ../index.php");
     die();
@@ -21,6 +24,8 @@ if($result->num_rows>0){
     $row=$result->fetch_assoc();
     $_SESSION['Name']=$row['Nume'];
 }
+
+Lew::Reiterate_Table_IDs("gtfo.scores");
 
 ?>
 <!DOCTYPE html>

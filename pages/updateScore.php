@@ -64,12 +64,15 @@ if(!empty($_POST)){
             die("Failed to connect: ".$conn->error);
         
         $member=new Member($member,$category,$table,$task,$action);
-        $member->AddToHistory();
-        $member->UpdateScore();
+        for($i=0;$i<$it_val;$i++){
+            $member->AddToHistory();
+            $member->UpdateScore();
+        }
     }
     else{
         $member=new Member($_SESSION['Name'],$category,$table,$task,$action);
-        $member->AddToHistory();
+        for($i=0;$i<$it_val;$i++)
+            $member->AddToHistory();
     }
 
     header("Location: page1.php");

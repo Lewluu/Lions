@@ -33,9 +33,9 @@ if($conn->connect_error)
                     <th>Aprobare?</th>
                 </tr>
             <?php
-            // if(isset($_POST["exeReq"])){
-            //     echo "<meta http-equiv='refresh' content='0'>";
-            // }
+            if(isset($_POST["exeReq"])){
+                echo "<meta http-equiv='refresh' content='0'>";
+            }
             $sql="SELECT id, Email, Approved FROM gtfo.requests";
             $result=$conn->query($sql);
             if($result){
@@ -57,12 +57,6 @@ if($conn->connect_error)
                             DA <input type='radio' name='".$aprobare[$i]."' value='YES'>
                             NU <input type='radio' name='".$aprobare[$i++]."' value='NO'>
                         </td>";
-                        /*echo
-                        '
-                            '.$row["Email"].' -->
-                            Aprobare: Da <input type="radio" name="'.$aprobare[$i].'" value="YES">
-                                      Nu <input type="radio" name="'.$aprobare[$i++].'" value="NO"><br>
-                        ';*/
                     }
                 }
                 echo
@@ -140,6 +134,7 @@ if($conn->connect_error)
                     if(!empty($_POST[$APROBARE[$l]])){
                         if($_POST[$APROBARE[$l]]=="YES"){
                             //clar va trebui facuta o functie aici de updateScore
+                            echo "aici <br>";
                             $member[$l]->UpdateScore();
                         }
                         else{
