@@ -120,7 +120,7 @@ if($conn->connect_error)
                         echo "<td>".$row["Score"]."</td>";
                         echo "<td>".$row["Action"]."</td>";
                         //creating a member with this data
-                        $member[$k]=new Member($row["Member"],$row["Category_Table"],$row["Category"],$row["Task"],$row["Action"]);
+                        $member[$k]=new Member($row["Member"],$row["Category"],$row["Category_Table"],$row["Task"],$row["Action"]);
                         echo
                         "<td>
                             DA <input type='radio' name=".$APROBARE[$k]." value='YES'>
@@ -142,7 +142,7 @@ if($conn->connect_error)
                             //clar va trebui facuta o functie aici de updateScore
                             $member[$l]->UpdateScore();
                         }
-                        elseif($_POST[$APROBARE[$l]]=="NO"){
+                        else{
                             $sql="DELETE FROM gtfo.scores WHERE id=($l+1)";
                             $result=$conn->query($sql);
                             if(!$result)

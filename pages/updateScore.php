@@ -63,12 +63,12 @@ if(!empty($_POST)){
         else
             die("Failed to connect: ".$conn->error);
         
-        $member=new Member($member,$table,$category,$task,$action);
+        $member=new Member($member,$category,$table,$task,$action);
         $member->AddToHistory();
         $member->UpdateScore();
     }
     else{
-        $member=new Member($_SESSION['Username'],$table,$category,$task,$action);
+        $member=new Member($_SESSION['username'],$category,$table,$task,$action);
         $member->AddToHistory();
     }
 
