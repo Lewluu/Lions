@@ -14,6 +14,7 @@ class Member{
     private $task;
     private $task_score;
     private $action;
+    private $score_id;
 
     //constructor
     function __construct($name,$category_name,$category_table,$task,$action){             //category
@@ -34,7 +35,6 @@ class Member{
             $row=$result->fetch_assoc();
             $this->task_score=$row["Score"];
         }
-
     }
 
     //public methods
@@ -108,20 +108,29 @@ class Member{
         if($new_score<0 || $new_category_score<0)
             die("Noul scor e mai mic decat 0!");
 
-        //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name 
         $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
                 WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);
-        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE Member='$this->name'";
+        //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name 
+        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE id='$this->score_id'";
         $result=$conn->query($sql);
-        if(!$result)
+        if(!$result){
             die("Failed to connect: ".$conn->error);
+        }
+    }
+
+    function setScoreID($id){
+        $this->score_id=$id;
     }
 
     function getName(){
         return $this->name;
+    }
+
+    function getID(){
+        return $this->score_id;
     }
 }
 

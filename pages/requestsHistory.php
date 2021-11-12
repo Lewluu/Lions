@@ -1,6 +1,7 @@
 <?php session_start();
 
 require "Dependencies/member.php";
+require "Dependencies/functions.php";
 
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
 if($conn->connect_error)
@@ -33,9 +34,9 @@ if($conn->connect_error)
                     <th>Aprobare?</th>
                 </tr>
             <?php
-            if(isset($_POST["exeReq"])){
-                echo "<meta http-equiv='refresh' content='0'>";
-            }
+            // if(isset($_POST["exeReq"])){
+            //     echo "<meta http-equiv='refresh' content='0'>";
+            // }
             $sql="SELECT id, Email, Approved FROM gtfo.requests";
             $result=$conn->query($sql);
             if($result){
@@ -97,7 +98,7 @@ if($conn->connect_error)
                 </tr>
                 <form name="scoresForm" method="POST" action="requestsHistory.php">
                 <?php
-                $sql="SELECT Date, Time, Member, Category, Category_Table, Task, Score, Action FROM gtfo.scores WHERE Status='Unchecked'";
+                $sql="SELECT id, Date, Time, Member, Category, Category_Table, Task, Score, Action FROM gtfo.scores WHERE Status='Unchecked'";
                 if($result=$conn->query($sql)){
                     $k=0;
                     $id=0;
@@ -115,6 +116,7 @@ if($conn->connect_error)
                         echo "<td>".$row["Action"]."</td>";
                         //creating a member with this data
                         $member[$k]=new Member($row["Member"],$row["Category"],$row["Category_Table"],$row["Task"],$row["Action"]);
+                        $member[$k]->setScoreID($row["id"]);
                         echo
                         "<td>
                             DA <input type='radio' name=".$APROBARE[$k]." value='YES'>
@@ -134,18 +136,19 @@ if($conn->connect_error)
                     if(!empty($_POST[$APROBARE[$l]])){
                         if($_POST[$APROBARE[$l]]=="YES"){
                             //clar va trebui facuta o functie aici de updateScore
-                            echo "aici <br>";
                             $member[$l]->UpdateScore();
                         }
                         else{
-                            $name=strval($member[$l]->getName());
-                            $sql="DELETE FROM gtfo.scores WHERE Member='$name'";
+                            $id_m=$member[$l]->getID();
+                            $sql="DELETE FROM gtfo.scores WHERE id='$id_m'";
                             $result=$conn->query($sql);
                             if(!$result)
                                 die("Failed to connect: ".$conn->error);
+                            Lew::Reiterate_Table_IDs("gtfo.scores");
                         }
                     }
                 }
+
                 ?>
             </table>
         </div>

@@ -25,8 +25,6 @@ if($result->num_rows>0){
     $_SESSION['Name']=$row['Nume'];
 }
 
-Lew::Reiterate_Table_IDs("gtfo.scores");
-
 ?>
 <!DOCTYPE html>
 <html>
