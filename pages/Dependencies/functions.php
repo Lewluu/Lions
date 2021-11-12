@@ -15,16 +15,19 @@ class Lew{
             die("Failed to connect: ".$conn->error);
         else{
             $id_good=1;
+            $it=0;
             while($row=$result->fetch_assoc()){
                 if($row["id"]!=$id_good){
                     $id_curr=$row["id"];
-                    $sql="UPDATE $table SET id=$id_good WHERE id=$id_curr";
-                    $result=$conn->query($sql);
-                    if(!$result)
-                        die("Failed to connect :".$conn->error);
+                    $sql_comm[$it++]="UPDATE $table SET id=$id_good WHERE id=$id_curr";
                 }
                 $id_good++;
             }
+        }
+        for($i=0;$i<count($sql_comm);$i++){
+            $result=$conn->query($sql_comm[$i]);
+            if(!$result)
+                die("Failed to connect: ".$conn->error);
         }
     }
 }
