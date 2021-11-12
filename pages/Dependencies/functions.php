@@ -23,6 +23,7 @@ class Lew{
                 }
                 $id_good++;
             }
+            unset($it,$id_good,$id_curr);
         }
         for($i=0;$i<count($sql_comm);$i++){
             $result=$conn->query($sql_comm[$i]);
