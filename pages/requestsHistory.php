@@ -79,6 +79,7 @@ if($conn->connect_error)
                             if(!$result=$conn->query($sql))
                                 die("Failed to query: ".$conn->error);
                         }
+                        Lew::Reiterate_Table_IDs("gtfo.requests");
                     }
                 }
             }
