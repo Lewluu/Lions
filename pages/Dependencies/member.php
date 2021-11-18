@@ -162,13 +162,13 @@ class Member{
         }
         $sql="INSERT INTO gtfo.scores(id,Member,Category,Category_Table,Task,Score,
         Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','Bonus','none',
-            'none',$val,'$date','$time','$action','$status','$rol')";
+            'Bonus score',$val,'$date','$time','$action','$status','$rol')";
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);
         
         if($rol=="Admin"){
-            $sql="ALTER gtfo.members SET Score='$new_score' WHERE Nume='$this->name'";
+            $sql="UPDATE gtfo.members SET Score=$new_score WHERE Nume='$this->name'";
             $result=$conn->query($sql);
             if(!$result)
                 die("Failed to connect :".$conn->error);

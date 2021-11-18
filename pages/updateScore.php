@@ -41,24 +41,6 @@ if(!empty($_POST)){
             $category="International";
             break;
     }
-    //checking if bonus points have been added
-    if(!empty($_POST["bonusVal"])){
-        if($rol=="Admin"){
-            $id_member=$_POST["members"];
-            $sql="SELECT Nume FROM gtfo.members WHERE id='$id_member'";
-            $result=$conn->query($sql);
-            if($result){
-                $row=$result->fetch_assoc();
-                $member=$row['Nume'];
-                $sql="SELECT Score FROM gtfo.members WHERE id='$id_member'";
-                $result=$conn->query($sql);
-                if($result){
-                    $row=$result->fetch_assoc();
-                }
-            }
-        }
-    }
-
     //getting the task
     $sql="SELECT Name FROM $table WHERE id='$id_task'";
     $result=$conn->query($sql);

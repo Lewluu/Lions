@@ -4,8 +4,9 @@ require "Dependencies/member.php";
 require "Dependencies/functions.php";
 
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
-if($conn->connect_error)
+if($conn->connect_error){
     die("Failed to connect: ".$conn->connect_error);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -116,7 +117,8 @@ if($conn->connect_error)
                         echo "<td>".$row["Score"]."</td>";
                         echo "<td>".$row["Action"]."</td>";
                         //creating a member with this data
-                        $member[$k]=new Member($row["Member"],$row["Category"],$row["Category_Table"],$row["Task"],$row["Action"]);
+                        $member[$k]=new Member($row["Member"]);
+                        $member[$k]->AddData($row["Category"],$row["Category_Table"],$row["Task"],$row["Action"]);
                         $member[$k]->setScoreID($row["id"]);
                         echo
                         "<td>
@@ -132,7 +134,7 @@ if($conn->connect_error)
                 </tr>
                 </form>
                 <?php
-
+                
                 for($l=0;$l<$k;$l++){
                     if(!empty($_POST[$APROBARE[$l]])){
                         if($_POST[$APROBARE[$l]]=="YES"){
@@ -143,8 +145,9 @@ if($conn->connect_error)
                             $id_m=$member[$l]->getID();
                             $sql="DELETE FROM gtfo.scores WHERE id='$id_m'";
                             $result=$conn->query($sql);
-                            if(!$result)
+                            if(!$result){
                                 die("Failed to connect: ".$conn->error);
+                            }
                             Lew::Reiterate_Table_IDs("gtfo.scores");
                         }
                     }
