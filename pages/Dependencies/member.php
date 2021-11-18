@@ -17,12 +17,17 @@ class Member{
     private $score_id;
 
     //constructor
-    function __construct($name,$category_name,$category_table,$task,$action){             //category
+    function __construct($name){             //category
         $this->name=$name;
+    }
+
+    //public methods
+    function AddData($category_name, $category_table, $task, $action){
         $this->category_name=$category_name;
+        $this->category_table=$category_table;
         $this->task=$task;
         $this->action=$action;
-        $this->category_table=$category_table;
+
         //getting the task score
         global $conn;
 
@@ -37,7 +42,6 @@ class Member{
         }
     }
 
-    //public methods
     function AddToHistory(){
         global $conn;                                                       //to use the global variable
         $current_score=$new_score=$current_category_score=$new_category_score="";
@@ -118,6 +122,56 @@ class Member{
         $result=$conn->query($sql);
         if(!$result){
             die("Failed to connect: ".$conn->error);
+        }
+    }
+
+    function AddBonus($val, $action){
+        global $conn;
+        $date=strval(date("d.m.Y"));
+        $time=strval(date("h:i:sa"));
+        
+        $sql="SELECT Score FROM gtfo.members WHERE Nume='$this->name'";
+        $result=$conn->query($sql);
+        if($result){
+            $row=$result->fetch_assoc();
+            $current_score=$row["Score"];
+        }
+        else
+            die("Failed to connect: ".$conn->error);
+        $sql="SELECT MAX(id) FROM gtfo.scores";
+        $result=$conn->query($sql);
+        if($result){
+            $row=$result->fetch_array();
+            $id=$row[0]+1;
+        }
+        else
+            die("Failed to connect: ".$conn->error);
+
+        $rol=$_SESSION["Rol"];
+        if($rol=="Admin")
+            $status="Checked";
+        else
+            $status="Unchecked";
+
+        if($action=="Adaugare")
+            $new_score=$current_score+$val;
+        else{
+            $new_score=$current_score-$val;
+            if($new_score<0)
+                die("Noul scor e mai mic decat 0!");
+        }
+        $sql="INSERT INTO gtfo.scores(id,Member,Category,Category_Table,Task,Score,
+        Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','Bonus','none',
+            'none',$val,'$date','$time','$action','$status','$rol')";
+        $result=$conn->query($sql);
+        if(!$result)
+            die("Failed to connect: ".$conn->error);
+        
+        if($rol=="Admin"){
+            $sql="ALTER gtfo.members SET Score='$new_score' WHERE Nume='$this->name'";
+            $result=$conn->query($sql);
+            if(!$result)
+                die("Failed to connect :".$conn->error);
         }
     }
 

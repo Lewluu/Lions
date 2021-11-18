@@ -41,6 +41,23 @@ if(!empty($_POST)){
             $category="International";
             break;
     }
+    //checking if bonus points have been added
+    if(!empty($_POST["bonusVal"])){
+        if($rol=="Admin"){
+            $id_member=$_POST["members"];
+            $sql="SELECT Nume FROM gtfo.members WHERE id='$id_member'";
+            $result=$conn->query($sql);
+            if($result){
+                $row=$result->fetch_assoc();
+                $member=$row['Nume'];
+                $sql="SELECT Score FROM gtfo.members WHERE id='$id_member'";
+                $result=$conn->query($sql);
+                if($result){
+                    $row=$result->fetch_assoc();
+                }
+            }
+        }
+    }
 
     //getting the task
     $sql="SELECT Name FROM $table WHERE id='$id_task'";
@@ -58,19 +75,21 @@ if(!empty($_POST)){
         $result=$conn->query($sql);
         if($result->num_rows>0){
             $row=$result->fetch_assoc();
-            $member=$row['Nume'];
+            $member_name=$row['Nume'];
         }
         else
             die("Failed to connect: ".$conn->error);
         
-        $member=new Member($member,$category,$table,$task,$action);
+        $member=new Member($member_name);
+        $member->AddData($category,$table,$task,$action);
         for($i=0;$i<$it_val;$i++){
             $member->AddToHistory();
             $member->UpdateScore();
         }
     }
     else{
-        $member=new Member($_SESSION['Name'],$category,$table,$task,$action);
+        $member=new Member($_SESSION['Name']);
+        $member->AddData($category,$table,$task,$action);
         for($i=0;$i<$it_val;$i++)
             $member->AddToHistory();
     }
