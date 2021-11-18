@@ -84,6 +84,8 @@ if($conn->connect_error){
                     }
                 }
             }
+            else
+                die("Failed to connect:".$conn->error);
             ?>
             </table>
             <table>
@@ -128,13 +130,15 @@ if($conn->connect_error){
                         echo "</tr>";
                     }
                 }
+                else
+                    die("Failed to connect :".$conn->error);
                 ?>
                 <tr>
                     <td><input name="exeReq" type="submit" value="Executa!"></td>
                 </tr>
                 </form>
                 <?php
-                
+
                 for($l=0;$l<$k;$l++){
                     if(!empty($_POST[$APROBARE[$l]])){
                         if($_POST[$APROBARE[$l]]=="YES"){
