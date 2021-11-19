@@ -15,10 +15,19 @@ class Member{
     private $task_score;
     private $action;
     private $score_id;
+    private $score;
 
     //constructor
     function __construct($name){             //category
+        global $conn;
         $this->name=$name;
+
+        $sql="SELECT Score FROM gtfo.members WHERE Nume='$this->name'";
+        $result=$conn->query($sql);
+        if($result){
+            $row=$result->fetch_assoc();
+            $this->score=$row["Score"];
+        }
     }
 
     //public methods
@@ -31,14 +40,16 @@ class Member{
         //getting the task score
         global $conn;
 
-        $sql="SELECT Score FROM $this->category_table WHERE Name='$this->task'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die("Failed to connect: ".$conn->error);
-        }
-        else{
-            $row=$result->fetch_assoc();
-            $this->task_score=$row["Score"];
+        if($category_name!="Bonus"){
+            $sql="SELECT Score FROM $this->category_table WHERE Name='$this->task'";
+            $result=$conn->query($sql);
+            if(!$result){
+                die("Failed to connect: ".$conn->error);
+            }
+            else{
+                $row=$result->fetch_assoc();
+                $this->task_score=$row["Score"];
+            }
         }
     }
 
@@ -90,38 +101,49 @@ class Member{
         //va prelucra toate scorurile din unchecked si adminul ori va da accept si vor deveni checked
         //ori ii va da denies si se va sterge complet
         global $conn;                                                       //to use the global variable
-        $current_score=$new_score=$current_category_score=$new_category_score="";
 
-        $sql="SELECT Score,'$this->category_name' FROM gtfo.members WHERE Nume='$this->name'";
-        $result=$conn->query($sql);
-        if(!$result)
-            die("Failed to connect: ".$conn->error);
-        if($result->num_rows>0){
-            $row=$result->fetch_assoc();
-            $current_score=$row["Score"];
-            $current_category_score=$row[$this->category_name];
-        }
-        if($this->action=="Adaugare"){
-            $new_score=$current_score+$this->task_score;
-            $new_category_score=intval($current_category_score)+$this->task_score;
+        if($this->category_name=="Bonus"){
+            if($this->action=="Adaugare")
+                $new_score=$this->score+$this->task_score;
+            else
+                $new_score=$this->score-$this->task_score;
+            $sql="UPDATE gtfo.members SET Score=$new_score WHERE Nume='$this->name'";
+            $result=$conn->query($sql);
+            if(!$result)
+                die("Failed to connect: ".$conn->error);
         }
         else{
-            $new_score=$current_score-$this->task_score;
-            $new_category_score=$current_category_score-$this->task_score;
-        }
-        if($new_score<0 || $new_category_score<0)
-            die("Noul scor e mai mic decat 0!");
+            $sql="SELECT Score,'$this->category_name' FROM gtfo.members WHERE Nume='$this->name'";
+            $result=$conn->query($sql);
+            if(!$result)
+                die("Failed to connect: ".$conn->error);
+            if($result->num_rows>0){
+                $row=$result->fetch_assoc();
+                $current_score=$row["Score"];
+                $current_category_score=$row[$this->category_name];
+            }
+            if($this->action=="Adaugare"){
+                $new_score=$current_score+$this->task_score;
+                $new_category_score=intval($current_category_score)+$this->task_score;
+            }
+            else{
+                $new_score=$current_score-$this->task_score;
+                $new_category_score=$current_category_score-$this->task_score;
+            }
+            if($new_score<0 || $new_category_score<0)
+                die("Noul scor e mai mic decat 0!");
 
-        $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
-                WHERE Nume='$this->name'";
-        $result=$conn->query($sql);
-        if(!$result)
-            die("Failed to connect: ".$conn->error);
-        //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name 
-        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE id='$this->score_id'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die("Failed to connect: ".$conn->error);
+            $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
+                    WHERE Nume='$this->name'";
+            $result=$conn->query($sql);
+            if(!$result)
+                die("Failed to connect: ".$conn->error);
+            //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name
+            $sql="UPDATE gtfo.scores SET Status='Checked' WHERE id='$this->score_id'";
+            $result=$conn->query($sql);
+            if(!$result){
+                die("Failed to connect: ".$conn->error);
+            }
         }
     }
 
@@ -129,7 +151,10 @@ class Member{
         global $conn;
         $date=strval(date("d.m.Y"));
         $time=strval(date("h:i:sa"));
-        
+
+        $this->task_score=$val;
+        $this->action=$action;
+
         $sql="SELECT Score FROM gtfo.members WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if($result){
@@ -166,7 +191,7 @@ class Member{
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);
-        
+
         if($rol=="Admin"){
             $sql="UPDATE gtfo.members SET Score=$new_score WHERE Nume='$this->name'";
             $result=$conn->query($sql);
@@ -181,6 +206,14 @@ class Member{
 
     function getName(){
         return $this->name;
+    }
+
+    function getScore(){
+        return $this->score;
+    }
+
+    function getCategory(){
+        return $this->category_name;
     }
 
     function getID(){
