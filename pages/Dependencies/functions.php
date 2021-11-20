@@ -31,6 +31,35 @@ class Lew{
                 die("Failed to connect: ".$conn->error);
         }
     }
+    public static function Update_Member_Title($name){
+        global $conn;
+        $sql="SELECT Score, Gender FROM gtfo.members WHERE Nume='$name'";
+        $result=$conn->query($sql);
+        if($result){
+            $row=$result->fetch_assoc();
+            $score=$row["Score"];
+            $gender=$row["Gender"];
+        }
+        $sql="SELECT Name, Gender, Score1, Score2 FROM gtfo.titles";
+        $result=$conn->query($sql);
+        if($result){
+            while($row=$result->fetch_assoc()){
+                if($score>=$row["Score1"] && $score<=$row["Score2"]){
+                    if($gender==$row["Gender"] || $row["Gender"]=="both"){
+                        $new_title=$row["Name"];
+                        $sql="UPDATE gtfo.members SET Title='$new_title' WHERE Nume='$name'";
+                        $result=$conn->query($sql);
+                        if(!$result)
+                            die("Failed to connect: ".$conn->error);
+                    }
+                    break;
+                }
+            }
+        }
+        else{
+            die("Failed to connect: ".$conn->error);
+        }
+    }
 }
 
 ?>

@@ -31,26 +31,12 @@ class Member{
     }
 
     //public methods
-    function AddData($category_name, $category_table, $task, $action){
+    function AddData($category_name, $category_table, $task, $action, $score){
         $this->category_name=$category_name;
         $this->category_table=$category_table;
         $this->task=$task;
         $this->action=$action;
-
-        //getting the task score
-        global $conn;
-
-        if($category_name!="Bonus"){
-            $sql="SELECT Score FROM $this->category_table WHERE Name='$this->task'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die("Failed to connect: ".$conn->error);
-            }
-            else{
-                $row=$result->fetch_assoc();
-                $this->task_score=$row["Score"];
-            }
-        }
+        $this->task_score=$score;
     }
 
     function AddToHistory(){
@@ -139,11 +125,12 @@ class Member{
             if(!$result)
                 die("Failed to connect: ".$conn->error);
             //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name
-            $sql="UPDATE gtfo.scores SET Status='Checked' WHERE id='$this->score_id'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die("Failed to connect: ".$conn->error);
-            }
+        }
+
+        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE id='$this->score_id'";
+        $result=$conn->query($sql);
+        if(!$result){
+            die("Failed to connect: ".$conn->error);
         }
     }
 

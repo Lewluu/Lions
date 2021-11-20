@@ -120,7 +120,7 @@ if($conn->connect_error){
                         echo "<td>".$row["Action"]."</td>";
                         //creating a member with this data
                         $member[$k]=new Member($row["Member"]);
-                        $member[$k]->AddData($row["Category"],$row["Category_Table"],$row["Task"],$row["Action"]);              //here is the problem
+                        $member[$k]->AddData($row["Category"],$row["Category_Table"],$row["Task"],$row["Action"],$row["Score"]);              //here is the problem
                         $member[$k]->setScoreID($row["id"]);
                         echo
                         "<td>

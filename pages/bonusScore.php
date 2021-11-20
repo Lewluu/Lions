@@ -2,6 +2,7 @@
 date_default_timezone_set("Europe/Bucharest");
 
 require 'Dependencies/member.php';
+require 'Dependencies/functions.php';
 
 $conn=new mysqli($_SESSION["servername"],$_SESSION["sv_username"],
                  $_SESSION["password"]);
@@ -23,10 +24,11 @@ if(!empty($_POST)){
         }
         else
             die("Failed to connect: ".$conn->error);
+        Lew::Update_Member_Title($member_name);
     }
     else
         $member_name=$_SESSION['Name'];
-    
+
     $member=new Member($member_name);
     $member->AddBonus($bonus,$action);
 

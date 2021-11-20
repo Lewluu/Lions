@@ -7,6 +7,7 @@ this is on main branch
 */
 
 require 'Dependencies/member.php';
+require 'Dependencies/functions.php';
 
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],
                    $_SESSION["password"]);
@@ -42,13 +43,14 @@ if(!empty($_POST)){
             break;
     }
     //getting the task
-    $sql="SELECT Name FROM $table WHERE id='$id_task'";
+    $sql="SELECT Name, Score FROM $table WHERE id='$id_task'";
     $result=$conn->query($sql);
     if(!$result)
         die("Failed to connect: ".$conn->error);
     else{
         $row=$result->fetch_assoc();
         $task=$row["Name"];
+        $score=$row["Score"];
     }
     //adding to history and updating score
     if($rol=="Admin"){
@@ -61,17 +63,18 @@ if(!empty($_POST)){
         }
         else
             die("Failed to connect: ".$conn->error);
-        
+
         $member=new Member($member_name);
-        $member->AddData($category,$table,$task,$action);
+        $member->AddData($category,$table,$task,$action,$score);
         for($i=0;$i<$it_val;$i++){
             $member->AddToHistory();
             $member->UpdateScore();
         }
+        Lew::Update_Member_Title($member_name);
     }
     else{
         $member=new Member($_SESSION['Name']);
-        $member->AddData($category,$table,$task,$action);
+        $member->AddData($category,$table,$task,$action,$score);
         for($i=0;$i<$it_val;$i++)
             $member->AddToHistory();
     }
