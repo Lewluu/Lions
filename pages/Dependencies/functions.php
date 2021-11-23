@@ -9,6 +9,7 @@ class Lew{
     //functie de reitarare a id-urilor in tabelele din baza de date
     public static function Reiterate_Table_IDs($table){
         global $conn;
+        $sql_comm=null;
         $sql="SELECT id FROM $table";
         $result=$conn->query($sql);
         if(!$result)
@@ -25,11 +26,13 @@ class Lew{
             }
             unset($it,$id_good,$id_curr);
         }
-        for($i=0;$i<count($sql_comm);$i++){
-            $result=$conn->query($sql_comm[$i]);
-            if(!$result)
-                die("Failed to connect: ".$conn->error);
-        }
+        if($sql_comm){
+            for($i=0;$i<count($sql_comm);$i++){
+                $result=$conn->query($sql_comm[$i]);
+                if(!$result)
+                    die("Failed to connect: ".$conn->error);
+            }
+    }
     }
     public static function Update_Member_Title($name){
         global $conn;

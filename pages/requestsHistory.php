@@ -35,9 +35,9 @@ if($conn->connect_error){
                     <th>Aprobare?</th>
                 </tr>
             <?php
-            if(isset($_POST["exeReq"])){
-                echo "<meta http-equiv='refresh' content='0'>";
-            }
+            // if(isset($_POST["exeReq"])){
+            //     echo "<meta http-equiv='refresh' content='0'>";
+            // }
             $sql="SELECT id, Email, Approved FROM gtfo.requests";
             $result=$conn->query($sql);
             if($result){
@@ -152,10 +152,11 @@ if($conn->connect_error){
                             if(!$result){
                                 die("Failed to connect: ".$conn->error);
                             }
-                            Lew::Reiterate_Table_IDs("gtfo.scores");
                         }
                     }
+                    Lew::Update_Member_Title($member[$l]->getName());
                 }
+                Lew::Reiterate_Table_IDs("gtfo.scores");
 
                 ?>
             </table>

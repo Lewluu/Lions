@@ -99,14 +99,14 @@ class Member{
                 die("Failed to connect: ".$conn->error);
         }
         else{
-            $sql="SELECT Score,'$this->category_name' FROM gtfo.members WHERE Nume='$this->name'";
+            $sql="SELECT Score,$this->category_name FROM gtfo.members WHERE Nume='$this->name'";
             $result=$conn->query($sql);
             if(!$result)
                 die("Failed to connect: ".$conn->error);
             if($result->num_rows>0){
                 $row=$result->fetch_assoc();
                 $current_score=$row["Score"];
-                $current_category_score=$row[$this->category_name];
+                $current_category_score=$row[strval($this->category_name)];
             }
             if($this->action=="Adaugare"){
                 $new_score=$current_score+$this->task_score;
@@ -116,6 +116,7 @@ class Member{
                 $new_score=$current_score-$this->task_score;
                 $new_category_score=$current_category_score-$this->task_score;
             }
+
             if($new_score<0 || $new_category_score<0)
                 die("Noul scor e mai mic decat 0!");
 
