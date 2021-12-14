@@ -61,7 +61,8 @@ class Member{
             $new_category_score=intval($current_category_score)-intval($this->task_score);
         }
         if($new_score<0 || $new_category_score<0)
-            die("Noul scor e mai mic decat 0!");
+            die("Noul scor e mai mic decat 0!<br>
+            <a href='page1.php'>Inapoi</a>");
 
         $date=strval(date("d.m.Y"));
         $time=strval(date("h:i:sa"));
@@ -118,7 +119,8 @@ class Member{
             }
 
             if($new_score<0 || $new_category_score<0)
-                die("Noul scor e mai mic decat 0!");
+                die("Noul scor e mai mic decat 0!<br>
+                <a href='page1.php'>Inapoi</a>");
 
             $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
                     WHERE Nume='$this->name'";
@@ -171,7 +173,8 @@ class Member{
         else{
             $new_score=$current_score-$val;
             if($new_score<0)
-                die("Noul scor e mai mic decat 0!");
+                die("Noul scor e mai mic decat 0!<br>
+                <a href='page1.php'>Inapoi</a>");
         }
         $sql="INSERT INTO gtfo.scores(id,Member,Category,Category_Table,Task,Score,
         Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','Bonus','none',
