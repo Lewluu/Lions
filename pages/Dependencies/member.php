@@ -54,11 +54,11 @@ class Member{
         }
         if($this->action=="Adaugare"){
             $new_score=intval($current_score)+$this->task_score;
-            $new_category_score=intval($current_category_score)+$this->task_score;
+            $new_category_score=intval($current_category_score)+intval($this->task_score);
         }
         else{
             $new_score=$current_score-$this->task_score;
-            $new_category_score=$current_category_score-$this->task_score;
+            $new_category_score=intval($current_category_score)-intval($this->task_score);
         }
         if($new_score<0 || $new_category_score<0)
             die("Noul scor e mai mic decat 0!");
