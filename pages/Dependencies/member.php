@@ -43,7 +43,7 @@ class Member{
         global $conn;                                                       //to use the global variable
         $current_score=$new_score=$current_category_score=$new_category_score="";
 
-        $sql="SELECT Score,'$this->category_name' FROM gtfo.members WHERE Nume='$this->name'";
+        $sql="SELECT Score,$this->category_name FROM gtfo.members WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);
@@ -60,9 +60,12 @@ class Member{
             $new_score=$current_score-$this->task_score;
             $new_category_score=intval($current_category_score)-intval($this->task_score);
         }
-        if($new_score<0 || $new_category_score<0)
-            die("Noul scor e mai mic decat 0!<br>
-            <a href='page1.php'>Inapoi</a>");
+        if($new_score<0 || $new_category_score<0){
+            $error_msg="Noul score e mai mic decat 0! : ".$this->name;
+            $_SESSION["error_msg"]=$error_msg;
+            header("Location: error.php");
+            die();
+        }
 
         $date=strval(date("d.m.Y"));
         $time=strval(date("h:i:sa"));
@@ -118,9 +121,12 @@ class Member{
                 $new_category_score=$current_category_score-$this->task_score;
             }
 
-            if($new_score<0 || $new_category_score<0)
-                die("Noul scor e mai mic decat 0!<br>
-                <a href='page1.php'>Inapoi</a>");
+            if($new_score<0 || $new_category_score<0){
+                $error_msg="Noul score e mai mic decat 0! : ".$this->name;
+                $_SESSION["error_msg"]=$error_msg;
+                header("Location: error.php");
+                die();
+            }
 
             $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
                     WHERE Nume='$this->name'";
@@ -172,9 +178,12 @@ class Member{
             $new_score=$current_score+$val;
         else{
             $new_score=$current_score-$val;
-            if($new_score<0)
-                die("Noul scor e mai mic decat 0!<br>
-                <a href='page1.php'>Inapoi</a>");
+            if($new_score<0){
+                $error_msg="Noul score e mai mic decat 0! : ".$this->name;
+                $_SESSION["error_msg"]=$error_msg;
+                header("Location: error.php");
+                die();
+            }
         }
         $sql="INSERT INTO gtfo.scores(id,Member,Category,Category_Table,Task,Score,
         Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','Bonus','none',
