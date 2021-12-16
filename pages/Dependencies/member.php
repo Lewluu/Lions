@@ -1,6 +1,8 @@
 <?php
 date_default_timezone_set("Europe/Bucharest");
 
+ob_start();
+
 $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],
                     $_SESSION["password"]);
 if($conn->connect_error)
@@ -63,6 +65,7 @@ class Member{
         if($new_score<0 || $new_category_score<0){
             $error_msg="Noul score e mai mic decat 0! : ".$this->name;
             $_SESSION["error_msg"]=$error_msg;
+            $_SESSION["err_relocate"]="page1.php";
             header("Location: error.php");
             die();
         }
@@ -124,6 +127,7 @@ class Member{
             if($new_score<0 || $new_category_score<0){
                 $error_msg="Noul score e mai mic decat 0! : ".$this->name;
                 $_SESSION["error_msg"]=$error_msg;
+                $_SESSION["err_relocate"]="requestsHistory.php";
                 header("Location: error.php");
                 die();
             }
@@ -181,6 +185,7 @@ class Member{
             if($new_score<0){
                 $error_msg="Noul score e mai mic decat 0! : ".$this->name;
                 $_SESSION["error_msg"]=$error_msg;
+                $_SESSION["err_relocate"]="page1.php";
                 header("Location: error.php");
                 die();
             }
