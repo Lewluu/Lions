@@ -226,4 +226,6 @@ class Member{
     }
 }
 
+ob_flush();
+
 ?>
