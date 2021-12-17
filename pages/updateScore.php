@@ -52,6 +52,15 @@ if(!empty($_POST)){
         $task=$row["Name"];
         $score=$row["Score"];
     }
+    //setting the member id
+    $sql="SELECT MAX(id) FROM gtfo.scores";
+    $result=$conn->query($sql);
+    if($result){
+        $row=$result->fetch_array();
+        $id_score=$row[0]+1;
+    }
+    else
+        die("Failed to connect: ".$conn->query);
     //adding to history and updating score
     if($rol=="Admin"){
         $id_member=$_POST["members"];
@@ -67,6 +76,7 @@ if(!empty($_POST)){
         $member=new Member($member_name);
         $member->AddData($category,$table,$task,$action,$score);
         for($i=0;$i<$it_val;$i++){
+            $member->setScoreID($id_score++);
             $member->AddToHistory();
             $member->UpdateScore();
         }

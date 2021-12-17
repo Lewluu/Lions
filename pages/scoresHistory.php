@@ -44,7 +44,7 @@ $conn=new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["pas
                     if($row['Status']=="Checked"){
                         $option[$cbit]="option".$cbit;
                         echo '<tr>';
-                        echo '<td>'.$row['id'].'</td>';
+                        echo '<td>'.($cbit+1).'</td>';
                         echo '<td>'.$row['Member'].'</td>';
                         echo '<td>'.$row['Category'].'</td>';
                         echo '<td>'.$row['Task'].'</td>';

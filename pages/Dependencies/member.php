@@ -139,7 +139,7 @@ class Member{
                 die("Failed to connect: ".$conn->error);
             //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name
         }
-
+        
         $sql="UPDATE gtfo.scores SET Status='Checked' WHERE id='$this->score_id'";
         $result=$conn->query($sql);
         if(!$result){
