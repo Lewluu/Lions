@@ -19,7 +19,7 @@ $_SESSION["password"]="";
         <video autoplay loop class="video-background" muted plays-inline>
             <source src="background_video.mp4" type="video/mp4">
         </video>
-        
+
         <div class="formular">
             <div class="form-box">
                 <div class="button-box">
@@ -36,7 +36,7 @@ $_SESSION["password"]="";
                             $err=$_GET["err"];
                             if($err==0)
                                 echo "<p>Username sau parola incorecte!</p> <br>";
-                        }   
+                        }
                     ?>
                 </form>
                 <form action="request.php" method="post" id="request" class="input-group">
@@ -55,18 +55,22 @@ $_SESSION["password"]="";
                             }
                         }
                     ?>
+                    <br>
+                    <p style="text-align:center;">
+                        <a href="https://docs.google.com/document/d/1EIrsDxk75jICVP-8UDJTrxs12OKp7StohkorCyLCiT8/edit" target="blank">Tutorial aplicatie</a>
+                    </p>
                 </form>
                 <form id="register" action="register.php" method="post" class="input-group">
                     <input type="email" name="email" class="input-field" placeholder="email" ><br>
                     <input type="password" name="password" class="input-field" placeholder="password" ><br>
                     <input type="password" name="rpassword" class="input-field" placeholder="repeat password" ><br>
-                    <p>Gender:</p><br> 
+                    <p>Gender:</p><br>
                     <p>Male</p><input type="radio" name="gender" value="male">
                     <p>Female</p><input type="radio" name="gender" value="female">
                     <p>Nu exista altceva!</p><input type="radio" name="gender" value="gay"><br>
                     <button type="submit" class="submit-btn">Inregistrare</button>
                     <?php
-        
+
                         if(!empty($_GET)){
                             $err=$_GET["err"];
                             switch($err){
@@ -103,14 +107,14 @@ $_SESSION["password"]="";
                 x.style.left = "-450px";
                 w.style.left="-450px";
                 y.style.left= "40px";
-                z.style.left ="110px";    
+                z.style.left ="110px";
             }
             function login(){
                 x.style.left = "40px";
                 y.style.left= "450px";
                 w.style.left="40px";
                 z.style.left ="0px";
-            }  
+            }
         </script>
     </body>
 </html>
