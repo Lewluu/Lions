@@ -233,7 +233,7 @@ if($result->num_rows>0){
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo_category.department";
+                    $sql="SELECT Name FROM gtfo.category_department";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -245,7 +245,7 @@ if($result->num_rows>0){
                 <td id="td_score">
                     <?php
 
-                    $sql="SELECT Score FROM gtfo_category.department";
+                    $sql="SELECT Score FROM gtfo.category_department";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -261,7 +261,7 @@ if($result->num_rows>0){
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo_category.extern";
+                    $sql="SELECT Name FROM gtfo.category_extern";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -273,7 +273,7 @@ if($result->num_rows>0){
                 <td id="td_score">
                     <?php
 
-                    $sql="SELECT Score FROM gtfo_category.extern";
+                    $sql="SELECT Score FROM gtfo.category_extern";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -288,7 +288,7 @@ if($result->num_rows>0){
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo_category.frteams";
+                    $sql="SELECT Name FROM gtfo.category_frteams";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -301,7 +301,7 @@ if($result->num_rows>0){
                 <td id="td_score">
                      <?php
 
-                    $sql="SELECT Score FROM gtfo_category.frteams";
+                    $sql="SELECT Score FROM gtfo.category_frteams";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -318,7 +318,7 @@ if($result->num_rows>0){
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo_category.grants";
+                    $sql="SELECT Name FROM gtfo.category_grants";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -332,7 +332,7 @@ if($result->num_rows>0){
                 <td id="td_score">
                     <?php
 
-                    $sql="SELECT Score FROM gtfo_category.grants";
+                    $sql="SELECT Score FROM gtfo.category_grants";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -349,7 +349,7 @@ if($result->num_rows>0){
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo_category.international";
+                    $sql="SELECT Name FROM gtfo.category_international";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -362,7 +362,7 @@ if($result->num_rows>0){
                 <td id="td_score">
                      <?php
 
-                    $sql="SELECT Score FROM gtfo_category.international";
+                    $sql="SELECT Score FROM gtfo.category_international";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){

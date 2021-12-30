@@ -22,23 +22,23 @@ if(!empty($_POST)){
 
     switch($id_category){                                       //getting the right category table
         case 1:
-            $table="gtfo_category.department";
+            $table="gtfo.category_department";
             $category="Departament";
             break;
         case 2:
-            $table="gtfo_category.extern";
+            $table="gtfo.category_extern";
             $category="Extern";
             break;
         case 3:
-            $table="gtfo_category.frteams";
+            $table="gtfo.category_frteams";
             $category="EchipeFR";
             break;
         case 4:
-            $table="gtfo_category.grants";
+            $table="gtfo.category_grants";
             $category="Granturi";
             break;
         case 5:
-            $table="gtfo_category.international";
+            $table="gtfo.category_international";
             $category="International";
             break;
     }

@@ -107,7 +107,7 @@ if($conn->connect_error){
                     $k=0;
                     $id=0;
                     while($row=$result->fetch_assoc()){
-                        //need to get category from database "gtfo_category..."
+                        //need to get category from database "gtfo.category_..."
                         $APROBARE[$k]="APROBARE".$k;
                         echo "<tr>";
                         echo "<td>".++$id."</td>";

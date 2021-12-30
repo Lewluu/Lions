@@ -9,7 +9,7 @@
             $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
             if($conn->connect_error)
                 die("Failed to connect: ".$conn->connect_error);
-            $sql="SHOW TABLES FROM gtfo_category";
+            $sql="SHOW TABLES FROM gtfo LIKE 'category_%'";
             $result=$conn->query($sql);
             $category[]="";
             $i=0;
@@ -21,7 +21,8 @@
             echo '<select class="optiune" name="category" onchange="showTasks(this.value)">
                     <option value="0">Selectare categorie</option>';
             for($i=0;$i<count($category);$i++){
-                echo '<option value='.($i+1).'>'.$category[$i].'</option>';
+                $category_name=str_replace("category_","",$category[$i]);
+                echo '<option value='.($i+1).'>'.$category_name.'</option>';
             }
             echo '</select>';
         }

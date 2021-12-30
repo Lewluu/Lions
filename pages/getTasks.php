@@ -12,19 +12,19 @@
             die("Failed to connect: ".$conn->connect_error);
         switch($q){
             case 1:
-                $table="gtfo_category.department";
+                $table="gtfo.category_department";
                 break;
             case 2:
-                $table="gtfo_category.extern";
+                $table="gtfo.category_extern";
                 break;
             case 3:
-                $table="gtfo_category.frteams";
+                $table="gtfo.category_frteams";
                 break;
             case 4:
-                $table="gtfo_category.grants";
+                $table="gtfo.category_grants";
                 break;
             case 5:
-                $table="gtfo_category.international";
+                $table="gtfo.category_international";
                 break;
         }
         if($table){
