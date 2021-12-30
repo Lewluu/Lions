@@ -1,4 +1,10 @@
 <?php session_start();
+
+if(empty($_SESSION['login'])){
+    header("Location: ../index.php");
+    die();
+}
+
 $conn=new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
 ?>
 <!DOCTYPE html>

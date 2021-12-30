@@ -2,27 +2,28 @@
 
 require 'Dependencies/functions.php';
 
-if(empty($_SESSION['login'])){
-    header("Location: ../index.php");
-    die();
-}
-$username=$_SESSION['username'];
-
 $conn = new mysqli($_SESSION["servername"],
                    $_SESSION["sv_username"],$_SESSION["password"]);
 if($conn->connect_error)
     die("Failed to connect: ".$conn->connect_error);
-$sql="SELECT Rol FROM gtfo.users WHERE username='$username'";
-$result=$conn->query($sql);
-if($result->num_rows>0){
-    $row=$result->fetch_assoc();
-    $_SESSION['Rol']=$row["Rol"];
+
+if(empty($_SESSION['login'])){
+    $_SESSION['Rol']="viewer";
 }
-$sql="SELECT Nume FROM gtfo.users WHERE username='$username'";
-$result=$conn->query($sql);
-if($result->num_rows>0){
-    $row=$result->fetch_assoc();
-    $_SESSION['Name']=$row['Nume'];
+else{
+    $username=$_SESSION['username'];
+    $sql="SELECT Rol FROM gtfo.users WHERE username='$username'";
+    $result=$conn->query($sql);
+    if($result->num_rows>0){
+        $row=$result->fetch_assoc();
+        $_SESSION['Rol']=$row["Rol"];
+    }
+    $sql="SELECT Nume FROM gtfo.users WHERE username='$username'";
+    $result=$conn->query($sql);
+    if($result->num_rows>0){
+        $row=$result->fetch_assoc();
+        $_SESSION['Name']=$row['Nume'];
+    }
 }
 
 ?>
@@ -46,12 +47,20 @@ if($result->num_rows>0){
         </div>
         <?php
 
-        $name=$result->fetch_assoc();
-        echo
+        if($_SESSION['Rol']=="viewer"){
+            echo
             '<div class="logged_user">
-                <p>Logged in as '.$_SESSION['Name'].' |
+                <p>Logged in as <b>viewer</b> <br>
+                <a href="../index.php">Go to login page</a></p>
+            </div>';
+        }
+        else{
+            echo
+            '<div class="logged_user">
+                <p>Logged in as <b>'.$_SESSION['Name'].'</b><br>
                 <a href="../index.php">Log Out</a></p>
             </div>';
+        }
         ?>
         <div id="interface">
             <div id="dashboard">
@@ -379,6 +388,11 @@ if($result->num_rows>0){
         </table>
         </div>
         </div>
+        <?php
+            if($_SESSION['Rol']=="viewer"){
+                die();
+            }
+        ?>
         <div class="box" id="adding_section">
             <div id="adding_score">
                 <p>Adaugare scor:</p>
@@ -465,7 +479,7 @@ if($result->num_rows>0){
                     }
                     echo '</select><br>';
                 }
-                else{
+                elseif($_SESSION['Rol']=='User'){
                     $sql='SELECT id FROM gtfo.members WHERE Nume="'.$_SESSION["Name"].'"';
                     $result=$conn->query($sql);
                     if($result->num_rows>0){

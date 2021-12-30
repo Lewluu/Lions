@@ -3,6 +3,7 @@ unset($_SESSION['login']);
 unset($_SESSION['username']);
 unset($_SESSION['Rol']);
 unset($_SESSION['Name']);
+//$_SESSION['Rol']='viewer';
 $_SESSION["servername"]="localhost";
 $_SESSION["sv_username"]="root";
 $_SESSION["password"]="";
@@ -55,7 +56,10 @@ $_SESSION["password"]="";
                             }
                         }
                     ?>
-                    <br>
+                    <br><br>
+                    <p style="text-align: center;">
+                        <a href="pages/page1.php">Vizualizare pagina principala</a>
+                    </p>
                     <p style="text-align:center;">
                         <a href="https://docs.google.com/document/d/1EIrsDxk75jICVP-8UDJTrxs12OKp7StohkorCyLCiT8/edit" target="blank">Tutorial aplicatie</a>
                     </p>

@@ -1,5 +1,10 @@
 <?php session_start();
 
+if(empty($_SESSION['login'])){
+    header("Location: ../index.php");
+    die();
+}
+
 require "Dependencies/member.php";
 require "Dependencies/functions.php";
 
