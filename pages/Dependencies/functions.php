@@ -54,8 +54,8 @@ class Lew{
                         $result=$conn->query($sql);
                         if(!$result)
                             die("Failed to connect: ".$conn->error);
+                        break;
                     }
-                    break;
                 }
             }
         }
