@@ -12,19 +12,19 @@
             die("Failed to connect: ".$conn->connect_error);
         switch($q){
             case 1:
-                $table="gtfo.category_department";
+                $table="$_SESSION[dbname].category_department";
                 break;
             case 2:
-                $table="gtfo.category_extern";
+                $table="$_SESSION[dbanme].category_extern";
                 break;
             case 3:
-                $table="gtfo.category_frteams";
+                $table="$_SESSION[dbname].category_frteams";
                 break;
             case 4:
-                $table="gtfo.category_grants";
+                $table="$_SESSION[dbname].category_grants";
                 break;
             case 5:
-                $table="gtfo.category_international";
+                $table="$_SESSION[dbname].category_international";
                 break;
         }
         if($table){

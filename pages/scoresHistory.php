@@ -43,7 +43,7 @@ $conn=new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["pas
                 </tr>
                 <?php
 
-                $sql="SELECT * FROM gtfo.scores";
+                $sql="SELECT * FROM $_SESSION[dbname].scores";
                 $result=$conn->query($sql);
                 $cbit=0;
                 while($row=$result->fetch_assoc()){

@@ -24,7 +24,7 @@ class Member{
         global $conn;
         $this->name=$name;
 
-        $sql="SELECT Score FROM gtfo.members WHERE Nume='$this->name'";
+        $sql="SELECT Score FROM $_SESSION[dbname].members WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if($result){
             $row=$result->fetch_assoc();
@@ -45,7 +45,7 @@ class Member{
         global $conn;                                                       //to use the global variable
         $current_score=$new_score=$current_category_score=$new_category_score="";
 
-        $sql="SELECT Score,$this->category_name FROM gtfo.members WHERE Nume='$this->name'";
+        $sql="SELECT Score,$this->category_name FROM $_SESSION[dbname].members WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if(!$result)
             die("Failed to connect: ".$conn->error);
@@ -72,7 +72,7 @@ class Member{
 
         $date=strval(date("d.m.Y"));
         $time=strval(date("h:i:sa"));
-        $sql="SELECT MAX(id) FROM gtfo.scores";
+        $sql="SELECT MAX(id) FROM $_SESSION[dbname].scores";
         $result=$conn->query($sql);
         if($result){
             $row=$result->fetch_array();
@@ -81,7 +81,7 @@ class Member{
         else
             die("Failed to connect: ".$conn->error);
         $rol=$_SESSION["Rol"];
-        $sql="INSERT INTO gtfo.scores(id,Member,Category,Category_Table,Task,Score,
+        $sql="INSERT INTO $_SESSION[dbname].scores(id,Member,Category,Category_Table,Task,Score,
                 Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','$this->category_name','$this->category_table',
                 '$this->task',$this->task_score,'$date','$time','$this->action','Unchecked','$rol')";
         $result=$conn->query($sql);
@@ -100,13 +100,13 @@ class Member{
                 $new_score=$this->score+$this->task_score;
             else
                 $new_score=$this->score-$this->task_score;
-            $sql="UPDATE gtfo.members SET Score=$new_score WHERE Nume='$this->name'";
+            $sql="UPDATE $_SESSION[dbname].members SET Score=$new_score WHERE Nume='$this->name'";
             $result=$conn->query($sql);
             if(!$result)
                 die("Failed to connect: ".$conn->error);
         }
         else{
-            $sql="SELECT Score,$this->category_name FROM gtfo.members WHERE Nume='$this->name'";
+            $sql="SELECT Score,$this->category_name FROM $_SESSION[dbname].members WHERE Nume='$this->name'";
             $result=$conn->query($sql);
             if(!$result)
                 die("Failed to connect: ".$conn->error);
@@ -132,7 +132,7 @@ class Member{
                 die();
             }
 
-            $sql="UPDATE gtfo.members SET Score='$new_score', $this->category_name='$new_category_score'
+            $sql="UPDATE $_SESSION[dbname].members SET Score='$new_score', $this->category_name='$new_category_score'
                     WHERE Nume='$this->name'";
             $result=$conn->query($sql);
             if(!$result)
@@ -140,7 +140,7 @@ class Member{
             //this is the update part -> it needs to be indicated with the id in the table, not the name. otherwise it'll update all rows which contains that name
         }
         
-        $sql="UPDATE gtfo.scores SET Status='Checked' WHERE id='$this->score_id'";
+        $sql="UPDATE $_SESSION[dbname].scores SET Status='Checked' WHERE id='$this->score_id'";
         $result=$conn->query($sql);
         if(!$result){
             die("Failed to connect: ".$conn->error);
@@ -155,7 +155,7 @@ class Member{
         $this->task_score=$val;
         $this->action=$action;
 
-        $sql="SELECT Score FROM gtfo.members WHERE Nume='$this->name'";
+        $sql="SELECT Score FROM $_SESSION[dbname].members WHERE Nume='$this->name'";
         $result=$conn->query($sql);
         if($result){
             $row=$result->fetch_assoc();
@@ -163,7 +163,7 @@ class Member{
         }
         else
             die("Failed to connect: ".$conn->error);
-        $sql="SELECT MAX(id) FROM gtfo.scores";
+        $sql="SELECT MAX(id) FROM $_SESSION[dbname].scores";
         $result=$conn->query($sql);
         if($result){
             $row=$result->fetch_array();
@@ -190,7 +190,7 @@ class Member{
                 die();
             }
         }
-        $sql="INSERT INTO gtfo.scores(id,Member,Category,Category_Table,Task,Score,
+        $sql="INSERT INTO $_SESSION[dbname].scores(id,Member,Category,Category_Table,Task,Score,
         Date,Time,Action,Status,AddedBy) VALUES($id,'$this->name','Bonus','none',
             'Bonus score',$val,'$date','$time','$action','$status','$rol')";
         $result=$conn->query($sql);
@@ -198,7 +198,7 @@ class Member{
             die("Failed to connect: ".$conn->error);
 
         if($rol=="Admin"){
-            $sql="UPDATE gtfo.members SET Score=$new_score WHERE Nume='$this->name'";
+            $sql="UPDATE $_SESSION[dbname].members SET Score=$new_score WHERE Nume='$this->name'";
             $result=$conn->query($sql);
             if(!$result)
                 die("Failed to connect :".$conn->error);

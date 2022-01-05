@@ -36,21 +36,21 @@ class Lew{
     }
     public static function Update_Member_Title($name){
         global $conn;
-        $sql="SELECT Score, Gender FROM gtfo.members WHERE Nume='$name'";
+        $sql="SELECT Score, Gender FROM $_SESSION[dbname].members WHERE Nume='$name'";
         $result=$conn->query($sql);
         if($result){
             $row=$result->fetch_assoc();
             $score=$row["Score"];
             $gender=$row["Gender"];
         }
-        $sql="SELECT Name, Gender, Score1, Score2 FROM gtfo.titles";
+        $sql="SELECT Name, Gender, Score1, Score2 FROM $_SESSION[dbname].titles";
         $result=$conn->query($sql);
         if($result){
             while($row=$result->fetch_assoc()){
                 if($score>=$row["Score1"] && $score<=$row["Score2"]){
                     if($gender==$row["Gender"] || $row["Gender"]=="both"){
                         $new_title=$row["Name"];
-                        $sql="UPDATE gtfo.members SET Title='$new_title' WHERE Nume='$name'";
+                        $sql="UPDATE $_SESSION[dbname].members SET Title='$new_title' WHERE Nume='$name'";
                         $result=$conn->query($sql);
                         if(!$result)
                             die("Failed to connect: ".$conn->error);

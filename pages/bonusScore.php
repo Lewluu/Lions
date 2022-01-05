@@ -16,7 +16,7 @@ if(!empty($_POST)){
     $rol=$_SESSION["Rol"];
     if($rol=="Admin"){
         $id_member=$_POST["members"];
-        $sql="SELECT Nume FROM gtfo.members WHERE id='$id_member'";
+        $sql="SELECT Nume FROM $_SESSION[dbname].members WHERE id='$id_member'";
         $result=$conn->query($sql);
         if($result){
             $row=$result->fetch_assoc();

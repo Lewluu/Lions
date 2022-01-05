@@ -9,7 +9,7 @@ if(strchr($email,"@")!="@bestis.ro"){
     die();
 }
 
-$sql="SELECT MAX(id) FROM gtfo.requests";
+$sql="SELECT MAX(id) FROM $_SESSION[dbname].requests";
 if(!($result=$conn->query($sql)))
     die("Failed to connect: ".$conn->error);
 else{
@@ -20,7 +20,7 @@ else{
         $id=$row[0]+1;
 }
 
-$sql="SELECT Email FROM gtfo.requests";
+$sql="SELECT Email FROM $_SESSION[dbname].requests";
 $result=$conn->query($sql);
 if($result){
     while($row=$result->fetch_assoc()){
@@ -30,7 +30,7 @@ if($result){
         }
     }
 }
-$sql="INSERT INTO gtfo.requests(id,Email, Approved) VALUES('$id','$email','NO')";
+$sql="INSERT INTO $_SESSION[dbname].requests(id,Email, Approved) VALUES('$id','$email','NO')";
 if($conn->query($sql)==true){
     header("Location: index.php");
     die();

@@ -9,7 +9,7 @@
             $conn = new mysqli($_SESSION["servername"],$_SESSION["sv_username"],$_SESSION["password"]);
             if($conn->connect_error)
                 die("Failed to connect: ".$conn->connect_error);
-            $sql="SHOW TABLES FROM gtfo LIKE 'category_%'";
+            $sql="SHOW TABLES FROM $_SESSION[dbname] LIKE 'category_%'";
             $result=$conn->query($sql);
             $category[]="";
             $i=0;

@@ -43,7 +43,7 @@ if($conn->connect_error){
             if(isset($_POST["exeReq"])){
                 echo "<meta http-equiv='refresh' content='0'>";
             }
-            $sql="SELECT id, Email, Approved FROM gtfo.requests";
+            $sql="SELECT id, Email, Approved FROM $_SESSION[dbname].requests";
             $result=$conn->query($sql);
             if($result){
                 echo
@@ -76,16 +76,16 @@ if($conn->connect_error){
                 for($j=0;$j<$i;$j++){
                     if(!empty($_POST[$aprobare[$j]])){
                         if($_POST[$aprobare[$j]]=="YES"){
-                            $sql="UPDATE gtfo.requests SET Approved='YES' WHERE Email='$email[$j]'";
+                            $sql="UPDATE $_SESSION[dbname].requests SET Approved='YES' WHERE Email='$email[$j]'";
                             if(!$result=$conn->query($sql))
                                 die("Failed to query: ".$conn->error);
                         }
                         else{
-                            $sql="DELETE FROM gtfo.requests WHERE Email='$email[$j]'";
+                            $sql="DELETE FROM $_SESSION[dbname].requests WHERE Email='$email[$j]'";
                             if(!$result=$conn->query($sql))
                                 die("Failed to query: ".$conn->error);
                         }
-                        Lew::Reiterate_Table_IDs("gtfo.requests");
+                        Lew::Reiterate_Table_IDs("$_SESSION[dbname].requests");
                     }
                 }
             }
@@ -107,7 +107,7 @@ if($conn->connect_error){
                 </tr>
                 <form name="scoresForm" method="POST" action="requestsHistory.php">
                 <?php
-                $sql="SELECT id, Date, Time, Member, Category, Category_Table, Task, Score, Action FROM gtfo.scores WHERE Status='Unchecked'";
+                $sql="SELECT id, Date, Time, Member, Category, Category_Table, Task, Score, Action FROM $_SESSION[dbname].scores WHERE Status='Unchecked'";
                 if($result=$conn->query($sql)){
                     $k=0;
                     $id=0;
@@ -152,7 +152,7 @@ if($conn->connect_error){
                         }
                         else{
                             $id_m=$member[$l]->getID();
-                            $sql="DELETE FROM gtfo.scores WHERE id='$id_m'";
+                            $sql="DELETE FROM $_SESSION[dbname].scores WHERE id='$id_m'";
                             $result=$conn->query($sql);
                             if(!$result){
                                 die("Failed to connect: ".$conn->error);
@@ -161,7 +161,7 @@ if($conn->connect_error){
                     }
                     Lew::Update_Member_Title($member[$l]->getName());
                 }
-                Lew::Reiterate_Table_IDs("gtfo.scores");
+                Lew::Reiterate_Table_IDs("$_SESSION[dbname].scores");
 
                 ?>
             </table>

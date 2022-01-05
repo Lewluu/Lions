@@ -4,6 +4,7 @@ unset($_SESSION['username']);
 unset($_SESSION['Rol']);
 unset($_SESSION['Name']);
 //$_SESSION['Rol']='viewer';
+$_SESSION["dbname"]="gtfo";
 $_SESSION["servername"]="localhost";
 $_SESSION["sv_username"]="root";
 $_SESSION["password"]="";
@@ -20,7 +21,6 @@ $_SESSION["password"]="";
         <video autoplay loop class="video-background" muted plays-inline>
             <source src="background_video.mp4" type="video/mp4">
         </video>
-
         <div class="formular">
             <div class="form-box">
                 <div class="button-box">

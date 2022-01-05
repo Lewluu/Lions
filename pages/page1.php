@@ -2,6 +2,11 @@
 
 require 'Dependencies/functions.php';
 
+if(empty($_SESSION["dbname"])){
+    header("Location: ../index.php");
+    die();
+}
+
 $conn = new mysqli($_SESSION["servername"],
                    $_SESSION["sv_username"],$_SESSION["password"]);
 if($conn->connect_error)
@@ -12,13 +17,13 @@ if(empty($_SESSION['login'])){
 }
 else{
     $username=$_SESSION['username'];
-    $sql="SELECT Rol FROM gtfo.users WHERE username='$username'";
+    $sql="SELECT Rol FROM $_SESSION[dbname].users WHERE username='$username'";
     $result=$conn->query($sql);
     if($result->num_rows>0){
         $row=$result->fetch_assoc();
         $_SESSION['Rol']=$row["Rol"];
     }
-    $sql="SELECT Nume FROM gtfo.users WHERE username='$username'";
+    $sql="SELECT Nume FROM $_SESSION[dbname].users WHERE username='$username'";
     $result=$conn->query($sql);
     if($result->num_rows>0){
         $row=$result->fetch_assoc();
@@ -66,7 +71,7 @@ else{
             <div id="dashboard">
                 <?php
                     $members[]="";
-                    $sql="SELECT id FROM gtfo.members";
+                    $sql="SELECT id FROM $_SESSION[dbname].members";
                     $result=$conn->query($sql);
                     $nRows=mysqli_num_rows($result);
                 ?>
@@ -85,7 +90,7 @@ else{
                     <div id="part_cont">
                     <?php
 
-                    $sql="SELECT Nume FROM gtfo.members
+                    $sql="SELECT Nume FROM $_SESSION[dbname].members
                     WHERE(Score>1250)";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
@@ -110,7 +115,7 @@ else{
                     <div id="part_cont">
                     <?php
 
-                    $sql="SELECT Nume FROM gtfo.members
+                    $sql="SELECT Nume FROM $_SESSION[dbname].members
                     WHERE(Score>=851 AND Score<=1250 AND
                     Gender='female')";
                     $result=$conn->query($sql);
@@ -136,7 +141,7 @@ else{
                     <div id="part_cont">
                     <?php
 
-                    $sql="SELECT Nume FROM gtfo.members
+                    $sql="SELECT Nume FROM $_SESSION[dbname].members
                     WHERE(Score>=851 AND Score<=1250 AND
                     Gender='male')";
                     $result=$conn->query($sql);
@@ -162,7 +167,7 @@ else{
                     <div id="part_cont">
                     <?php
 
-                    $sql="SELECT Nume FROM gtfo.members
+                    $sql="SELECT Nume FROM $_SESSION[dbname].members
                     WHERE(Score>=551 AND Score<=850)";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
@@ -188,7 +193,7 @@ else{
                     <?php
 
                     $sql="SELECT Nume FROM
-                    gtfo.members WHERE(Score>=251 AND Score<=550)";
+                    $_SESSION[dbname].members WHERE(Score>=251 AND Score<=550)";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $i=0;
@@ -213,7 +218,7 @@ else{
                         <div id="part_member">
                     <?php
 
-                    $sql="SELECT Nume FROM gtfo.members
+                    $sql="SELECT Nume FROM $_SESSION[dbname].members
                     WHERE(Score>=0 AND Score<=250)";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
@@ -242,7 +247,7 @@ else{
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo.category_department";
+                    $sql="SELECT Name FROM $_SESSION[dbname].category_department";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -254,7 +259,7 @@ else{
                 <td id="td_score">
                     <?php
 
-                    $sql="SELECT Score FROM gtfo.category_department";
+                    $sql="SELECT Score FROM $_SESSION[dbname].category_department";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -270,7 +275,7 @@ else{
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo.category_extern";
+                    $sql="SELECT Name FROM $_SESSION[dbname].category_extern";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -282,7 +287,7 @@ else{
                 <td id="td_score">
                     <?php
 
-                    $sql="SELECT Score FROM gtfo.category_extern";
+                    $sql="SELECT Score FROM $_SESSION[dbname].category_extern";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -297,7 +302,7 @@ else{
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo.category_frteams";
+                    $sql="SELECT Name FROM $_SESSION[dbname].category_frteams";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -310,7 +315,7 @@ else{
                 <td id="td_score">
                      <?php
 
-                    $sql="SELECT Score FROM gtfo.category_frteams";
+                    $sql="SELECT Score FROM $_SESSION[dbname].category_frteams";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -327,7 +332,7 @@ else{
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo.category_grants";
+                    $sql="SELECT Name FROM $_SESSION[dbname].category_grants";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -341,7 +346,7 @@ else{
                 <td id="td_score">
                     <?php
 
-                    $sql="SELECT Score FROM gtfo.category_grants";
+                    $sql="SELECT Score FROM $_SESSION[dbname].category_grants";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -358,7 +363,7 @@ else{
                 <td id="td_name">
                     <?php
 
-                    $sql="SELECT Name FROM gtfo.category_international";
+                    $sql="SELECT Name FROM $_SESSION[dbname].category_international";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -371,7 +376,7 @@ else{
                 <td id="td_score">
                      <?php
 
-                    $sql="SELECT Score FROM gtfo.category_international";
+                    $sql="SELECT Score FROM $_SESSION[dbname].category_international";
                     $result=$conn->query($sql);
                     if($result){
                         while($row=$result->fetch_assoc()){
@@ -406,7 +411,7 @@ else{
                         <option value="0">
                         Selectare persoana
                         </option>';
-                    $sql="SELECT Nume FROM gtfo.members";
+                    $sql="SELECT Nume FROM $_SESSION[dbname].members";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $counter=1;
@@ -420,7 +425,7 @@ else{
                     echo '</select>';
                 }
                 else{
-                    $sql='SELECT id FROM gtfo.members WHERE Nume="'.$_SESSION["Name"].'"';
+                    $sql='SELECT id FROM $_SESSION[dbname].members WHERE Nume="'.$_SESSION["Name"].'"';
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $row=$result->fetch_assoc();
@@ -466,7 +471,7 @@ else{
                         <option value="0">
                         Selectare persoana
                         </option>';
-                    $sql="SELECT Nume FROM gtfo.members";
+                    $sql="SELECT Nume FROM $_SESSION[dbname].members";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $counter=1;
@@ -480,7 +485,7 @@ else{
                     echo '</select><br>';
                 }
                 elseif($_SESSION['Rol']=='User'){
-                    $sql='SELECT id FROM gtfo.members WHERE Nume="'.$_SESSION["Name"].'"';
+                    $sql='SELECT id FROM $_SESSION[dbname].members WHERE Nume="'.$_SESSION["Name"].'"';
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $row=$result->fetch_assoc();

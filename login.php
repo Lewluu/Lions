@@ -8,8 +8,8 @@ else{
         $username=$_POST["username"];
         $password=$_POST["password"];
         $password=md5($password);
-        
-        $sql="SELECT username, Parola FROM gtfo.users WHERE username='$username' AND Parola='$password'";
+
+        $sql="SELECT username, Parola FROM $_SESSION[dbname].users WHERE username='$username' AND Parola='$password'";
         $res=$conn->query($sql);
         
         if($res->num_rows>0){

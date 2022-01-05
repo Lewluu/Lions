@@ -22,23 +22,23 @@ if(!empty($_POST)){
 
     switch($id_category){                                       //getting the right category table
         case 1:
-            $table="gtfo.category_department";
+            $table="$_SESSION[dbname].category_department";
             $category="Departament";
             break;
         case 2:
-            $table="gtfo.category_extern";
+            $table="$_SESSION[dbname].category_extern";
             $category="Extern";
             break;
         case 3:
-            $table="gtfo.category_frteams";
+            $table="$_SESSION[dbname].category_frteams";
             $category="EchipeFR";
             break;
         case 4:
-            $table="gtfo.category_grants";
+            $table="$_SESSION[dbname].category_grants";
             $category="Granturi";
             break;
         case 5:
-            $table="gtfo.category_international";
+            $table="$_SESSION[dbname].category_international";
             $category="International";
             break;
     }
@@ -53,7 +53,7 @@ if(!empty($_POST)){
         $score=$row["Score"];
     }
     //setting the member id
-    $sql="SELECT MAX(id) FROM gtfo.scores";
+    $sql="SELECT MAX(id) FROM $_SESSION[dbname].scores";
     $result=$conn->query($sql);
     if($result){
         $row=$result->fetch_array();
@@ -64,7 +64,7 @@ if(!empty($_POST)){
     //adding to history and updating score
     if($rol=="Admin"){
         $id_member=$_POST["members"];
-        $sql="SELECT Nume FROM gtfo.members WHERE id='$id_member'";
+        $sql="SELECT Nume FROM $_SESSION[dbname].members WHERE id='$id_member'";
         $result=$conn->query($sql);
         if($result->num_rows>0){
             $row=$result->fetch_assoc();

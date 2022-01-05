@@ -13,6 +13,6 @@ $conn = new mysqli($_SESSION["servername"],
 if($conn->connect_error)
     die("Failed to connect: ".$conn->connect_error);
 
-Lew::Reiterate_Table_IDs("gtfo.scores");
+Lew::Reiterate_Table_IDs("$_SESSION[dbname].scores");
 
 ?>
