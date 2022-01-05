@@ -15,7 +15,7 @@
                 $table="$_SESSION[dbname].category_department";
                 break;
             case 2:
-                $table="$_SESSION[dbanme].category_extern";
+                $table="$_SESSION[dbname].category_extern";
                 break;
             case 3:
                 $table="$_SESSION[dbname].category_frteams";

@@ -422,17 +422,23 @@ else{
                             </option>';
                         }
                     }
+                    else{
+                        die("Failed to connect: ".$conn->error);
+                    }
                     echo '</select>';
                 }
                 else{
-                    $sql='SELECT id FROM $_SESSION[dbname].members WHERE Nume="'.$_SESSION["Name"].'"';
+                    $sql='SELECT id FROM '.$_SESSION["dbname"].'.members WHERE Nume="'.$_SESSION["Name"].'"';
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $row=$result->fetch_assoc();
                         $id=$row["id"];
                         echo
                             '<script>showTables("'.$id.'",1)</script>';
-                }
+                    }
+                    else{
+                        die("Failed to connect: ".$conn->error);
+                    }
             }
             ?>
                 <div id="tablesHint"></div>
@@ -485,7 +491,7 @@ else{
                     echo '</select><br>';
                 }
                 elseif($_SESSION['Rol']=='User'){
-                    $sql='SELECT id FROM $_SESSION[dbname].members WHERE Nume="'.$_SESSION["Name"].'"';
+                    $sql='SELECT id FROM '.$_SESSION["dbname"].'.members WHERE Nume="'.$_SESSION["Name"].'"';
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $row=$result->fetch_assoc();
@@ -494,6 +500,9 @@ else{
                             '<script>showTables("'.$id.'",2)</script>';
                         echo
                             '<script>showBonusButton(1)</script>';
+                    }
+                    else{
+                        die("Failed to connect: ".$conn->error);
                     }
                 }
                 ?>
