@@ -91,7 +91,7 @@ else{
                     <?php
 
                     $sql="SELECT Nume FROM $_SESSION[dbname].members
-                    WHERE(Score>1250)";
+                    WHERE(Title='FOSSIL LION')";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $i=0;
@@ -116,8 +116,7 @@ else{
                     <?php
 
                     $sql="SELECT Nume FROM $_SESSION[dbname].members
-                    WHERE(Score>=851 AND Score<=1250 AND
-                    Gender='female')";
+                    WHERE(Title='MAMA LION')";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $i=0;
@@ -142,8 +141,7 @@ else{
                     <?php
 
                     $sql="SELECT Nume FROM $_SESSION[dbname].members
-                    WHERE(Score>=851 AND Score<=1250 AND
-                    Gender='male')";
+                    WHERE(Title='PAPA LION')";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $i=0;
@@ -168,7 +166,7 @@ else{
                     <?php
 
                     $sql="SELECT Nume FROM $_SESSION[dbname].members
-                    WHERE(Score>=551 AND Score<=850)";
+                    WHERE(Title='YOUNG LION')";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $i=0;
@@ -193,7 +191,7 @@ else{
                     <?php
 
                     $sql="SELECT Nume FROM
-                    $_SESSION[dbname].members WHERE(Score>=251 AND Score<=550)";
+                    $_SESSION[dbname].members WHERE(Title='TEEN LION')";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $i=0;
@@ -219,7 +217,7 @@ else{
                     <?php
 
                     $sql="SELECT Nume FROM $_SESSION[dbname].members
-                    WHERE(Score>=0 AND Score<=250)";
+                    WHERE(Title='BABY LION')";
                     $result=$conn->query($sql);
                     if($result->num_rows>0){
                         $i=0;
