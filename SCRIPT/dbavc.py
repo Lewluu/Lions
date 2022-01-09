@@ -1,5 +1,10 @@
 
-print("")
+import os
+import sys
+import shutil
+
+#script pentru modificarea variabilelor pentru conectarea la baza de date
+print()
 print(":::::MODIFICAREA VARIABILELOR PENTRU CONECTAREA LA BAZA DE DATE:::::")
 print(":::::DACA INTRERUPI ESTI FRAIER:::::")
 
@@ -38,5 +43,4 @@ file.write(fd)
 print(":::::DONE:::::")
 print("")
 
-
-
+#stergerea folder-ului
